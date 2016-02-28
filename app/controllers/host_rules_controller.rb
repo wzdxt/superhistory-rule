@@ -1,0 +1,2 @@
+class HostRulesController < ApplicationController
+end

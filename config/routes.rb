@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :admin
+  resources :rules
+  resources :host_rules
+  resources :path_rules
+  resources :content_rules
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
