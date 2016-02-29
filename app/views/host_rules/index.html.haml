@@ -1,0 +1,29 @@
+%h1 Listing host_rules
+
+%table
+  %thead
+    %tr
+      %th Host
+      %th Port
+      %th Include sub
+      %th Excluded
+      %th Ord
+      %th
+      %th
+      %th
+
+  %tbody
+    - @host_rules.each do |host_rule|
+      %tr
+        %td= host_rule.host
+        %td= host_rule.port
+        %td= host_rule.include_sub
+        %td= host_rule.excluded
+        %td= host_rule.ord
+        %td= link_to 'Show', host_rule
+        %td= link_to 'Edit', edit_host_rule_path(host_rule)
+        %td= link_to 'Destroy', host_rule, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Host rule', new_host_rule_path

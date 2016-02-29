@@ -3,7 +3,9 @@ Rails.application.routes.draw do
   resources :rules
   resources :host_rules
   resources :path_rules
-  resources :content_rules
+  get 'contents/:content_id/source' => 'contents#source'
+
+  root 'rules#new'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

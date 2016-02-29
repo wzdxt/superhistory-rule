@@ -1,0 +1,28 @@
+= form_for @path_rule do |f|
+  - if @path_rule.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@path_rule.errors.count, "error")} prohibited this path_rule from being saved:"
+      %ul
+        - @path_rule.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :host_url_id
+    = f.number_field :host_url_id
+  .field
+    = f.label :path_pattern
+    = f.text_field :path_pattern
+  .field
+    = f.label :excluded
+    = f.check_box :excluded
+  .field
+    = f.label :title_css_path
+    = f.text_area :title_css_path
+  .field
+    = f.label :content_css_paths
+    = f.text_area :content_css_paths
+  .field
+    = f.label :ord
+    = f.number_field :ord
+  .actions
+    = f.submit 'Save'

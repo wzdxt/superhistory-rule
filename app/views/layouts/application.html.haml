@@ -1,0 +1,41 @@
+!!! 5
+%html(lang="zh-Hans" class="no-js")
+  %head
+    %meta(charset="utf-8")
+    %meta(http-equiv="x-ua-compatible" content="ie=edge")
+    %title 超级历史-规则管理
+    %meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0")
+    %meta(name="description" content="")
+    %link(rel="apple-touch-icon" href="apple-touch-icon.png")
+    / Place favicon.ico in the root directory
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    - filename = params[:controller]
+    = stylesheet_link_tag filename
+    = javascript_include_tag filename
+
+    - %w(html_head head_js).each do |content|
+      - if content_for?(content.to_sym)
+        = yield(content.to_sym)
+
+    = csrf_meta_tags
+  %body
+    /[if lt IE 8]
+      <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+      your browser</a> to improve your experience.</p>
+    %header(class="clearfix")
+      %a.go-back.l-left(href="javascript:void(0)")
+        %i.fa.fa-angle-left
+          %a(href="/")
+            返回菜单页
+      - if current_admin.present?
+        = link_to '登出', destroy_admin_session_path, :method => :delete
+      %hr
+      - if content_for?(:header)
+        = yield(:header)
+    .container
+      = yield
+    - if content_for?(:action_bar)
+      .action-bar
+        = yield(:action_bar)
+

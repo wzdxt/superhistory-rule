@@ -1,53 +1,41 @@
 class Content < ActiveRecord::Base
   establish_connection :content
   content = Content.arel_table
-  scope :contains_localhost, -> {where content[:url].matches('%://localhost/%').or content[:url].matches('%://localhost:%')}
+  scope :id_order, -> { order(:id) }
 
-  module FETCH_ERROR
-    PROCESSED = 20
-    ERROR_ON_OPEN = 40
-    ERROR_OTHER = 50
+  def get_content_rule
+    host, port, path = fetch_url_info
+    get_rule_by_host_port_path(host, port, path)
   end
-  UTF8 = 'utf-8'
 
-  def grab
-    begin
-      client = HTTPClient.new
-      client.connect_timeout = client.send_timeout = client.receive_timeout = 3
-      res = client.get self.url
-      readability_doc = Readability::Document.new(res.body)
-      self.source = readability_doc.html.to_s.encode UTF8
-      self.title = readability_doc.title
-      # self.cache = readability_doc.content.encode UTF8
-      self.cache = self.source
-      self.search_content = Readability::Document.new(self.cache).html.text
-                                .gsub(/\s+/, ' ')
-                                .gsub(/[^\p{Word}|\p{P}|\p{S}|\s]+/, '') # 只保留中英文字,标点,符号和空格
-                                .gsub(/(?<=\P{Word})\s+(?=\p{Word})/, '') # 删除文字前空格
-                                .gsub(/(?<=\p{Word})\s+(?=\P{Word})/, '') # 删除文字后空格
-                                .strip
-      self
-    rescue HTTPClient::ReceiveTimeoutError, HTTPClient::ConnectTimeoutError, HTTPClient::SendTimeoutError => e
-      puts self.url
-      puts e.class, e.backtrace
-      return [false, FETCH_ERROR::ERROR_ON_OPEN]
-    rescue => e
-      puts self.url
-      puts e.class, e.backtrace
-      return [false, FETCH_ERROR::ERROR_OTHER]
+  def self.first_no_rule
+    self.id_order.select(:id, :url).each do |content|
+      return content unless content.get_content_rule
     end
-    return [true, Page::STATUS::SUCCESS]
+    nil
   end
 
-  def grab!
-    self.grab.save!
+  private
+
+  def get_rule_by_host_port_path(host, port, path)
+    parent_host = get_parent_host host
+    (HostRule.host(host).port(port).ord_order + HostRule.host(host).no_port.ord_order +
+        (parent_host ? HostRule.host(parent_host).no_port.include_sub.ord_order : [])).each do |host_rule|
+      return [nil, false] if host_rule.excluded?
+      if content_rule = host_rule.get_content_rule_by_path(path)
+        return [content_rule, true]
+      end
+    end
+    nil
   end
 
-  def self.remove_existed_local
-    self.contains_localhost.delete_all
+  def fetch_url_info
+    uri = URI.parse self.url
+    [uri.host, uri.port, uri.path]
   end
 
-  def self.reset_table
-    self.delete_all
+  def get_parent_host(host)
+    s = host.split('.')
+    s.size < 3 ? nil : s[1..-1].join('.')
   end
 end

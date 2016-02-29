@@ -11,29 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160228163342) do
-
-  create_table "content_rules", force: :cascade do |t|
-    t.text     "title_css_path"
-    t.text     "content_css_paths", default: "[]"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-  end
+ActiveRecord::Schema.define(version: 20160228160622) do
 
   create_table "host_rules", force: :cascade do |t|
     t.string   "host"
     t.integer  "port"
-    t.boolean  "include_sub"
-    t.boolean  "disable"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.boolean  "include_sub",           default: false
+    t.boolean  "excluded",              default: false
+    t.integer  "ord",         limit: 1
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
   end
 
   create_table "path_rules", force: :cascade do |t|
-    t.integer  "host_url_id"
+    t.integer  "host_rule_id"
     t.string   "path_pattern"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.boolean  "excluded",                    default: false
+    t.text     "title_css_path"
+    t.text     "content_css_paths",           default: "[]"
+    t.integer  "ord",               limit: 1
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
 end

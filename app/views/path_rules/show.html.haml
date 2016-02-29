@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Host url:
+  = @path_rule.host_url_id
+%p
+  %b Path pattern:
+  = @path_rule.path_pattern
+%p
+  %b Excluded:
+  = @path_rule.excluded
+%p
+  %b Title css path:
+  = @path_rule.title_css_path
+%p
+  %b Content css paths:
+  = @path_rule.content_css_paths
+%p
+  %b Ord:
+  = @path_rule.ord
+
+= link_to 'Edit', edit_path_rule_path(@path_rule)
+\|
+= link_to 'Back', path_rules_path

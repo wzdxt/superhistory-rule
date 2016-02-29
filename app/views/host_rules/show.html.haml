@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Host:
+  = @host_rule.host
+%p
+  %b Port:
+  = @host_rule.port
+%p
+  %b Include sub:
+  = @host_rule.include_sub
+%p
+  %b Excluded:
+  = @host_rule.excluded
+%p
+  %b Ord:
+  = @host_rule.ord
+
+= link_to 'Edit', edit_host_rule_path(@host_rule)
+\|
+= link_to 'Back', host_rules_path

@@ -1,0 +1,2 @@
+class ExcludedRuleException < Exception
+end

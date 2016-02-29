@@ -1,0 +1,31 @@
+%h1 Listing path_rules
+
+%table
+  %thead
+    %tr
+      %th Host url
+      %th Path pattern
+      %th Excluded
+      %th Title css path
+      %th Content css paths
+      %th Ord
+      %th
+      %th
+      %th
+
+  %tbody
+    - @path_rules.each do |path_rule|
+      %tr
+        %td= path_rule.host_url_id
+        %td= path_rule.path_pattern
+        %td= path_rule.excluded
+        %td= path_rule.title_css_path
+        %td= path_rule.content_css_paths
+        %td= path_rule.ord
+        %td= link_to 'Show', path_rule
+        %td= link_to 'Edit', edit_path_rule_path(path_rule)
+        %td= link_to 'Destroy', path_rule, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Path rule', new_path_rule_path

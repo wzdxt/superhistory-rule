@@ -1,2 +1,0 @@
-class ContentRulesController < ApplicationController
-end

@@ -1,0 +1,25 @@
+= form_for @host_rule do |f|
+  - if @host_rule.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@host_rule.errors.count, "error")} prohibited this host_rule from being saved:"
+      %ul
+        - @host_rule.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :host
+    = f.text_field :host
+  .field
+    = f.label :port
+    = f.number_field :port
+  .field
+    = f.label :include_sub
+    = f.check_box :include_sub
+  .field
+    = f.label :excluded
+    = f.check_box :excluded
+  .field
+    = f.label :ord
+    = f.number_field :ord
+  .actions
+    = f.submit 'Save'
