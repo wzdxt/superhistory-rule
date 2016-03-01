@@ -9,6 +9,8 @@ $ ->
   source_dom = document.createElement('html')
   source_dom.innerHTML = $('#source').val()
 
+  content_css_paths = []
+
   Node = (tag = '', parent = null)->
     @tag = tag
     @target = null
@@ -79,6 +81,10 @@ $ ->
   # set title
   $('a.btn.set-title-css-path-btn').on 'click', ->
     $('.form .path .title-css-path input').val $('input.css-path-input').val()
+  # set content
+  $('a.btn.set-content-css-path-btn').on 'click', ->
+    content_css_paths.push $('input.css-path-input').val()
+    render_content_css_paths_input()
   # test input
   $('.css-path-input').on 'change input', (e) ->
     selector = $(e.target).val()
@@ -89,7 +95,9 @@ $ ->
   # dom tree
   $ ->
     uniq_css_path = (elem) ->
-      $(elem).find('a:eq(0)').text()
+      tagName = $(elem).find('a:eq(0)').text()
+      idx = $(elem).parent().children().index(elem) + 1
+      "#{tagName}:nth-child(#{idx})"
 
     node = build_dom_tree($(source_dom))
     $('#jstree_div').jstree({
@@ -104,6 +112,17 @@ $ ->
       css_path = css_path.split(' ').slice(1).join('>')
       $('.css-path-input').val(css_path).trigger('change')
     node
+
+  render_content_css_paths_input = ->
+    $('.content-css-paths-data ul').empty()
+    $.each content_css_paths, (idx, path) ->
+      $('.content-css-paths-data ul').append(
+        $('<li>').append(
+          $('<a>').attr('href', 'javascript:void(0)').text('x')
+        ).append(
+          $('<input>').attr('type', 'text').attr('name', 'path_rule[content_css_path_items][]').val(path).css('width', '500px')
+        )
+      )
 
 
 

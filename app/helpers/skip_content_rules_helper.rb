@@ -1,0 +1,2 @@
+module SkipContentRulesHelper
+end

@@ -1,0 +1,19 @@
+%h1 Listing skip_content_rules
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @skip_content_rules.each do |skip_content_rule|
+      %tr
+        %td= link_to 'Show', skip_content_rule
+        %td= link_to 'Edit', edit_skip_content_rule_path(skip_content_rule)
+        %td= link_to 'Destroy', skip_content_rule, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Skip content rule', new_skip_content_rule_path

@@ -10,6 +10,7 @@ class Content < ActiveRecord::Base
 
   def self.first_no_rule
     self.id_order.select(:id, :url).each do |content|
+      next if SkipContentRule.exists? content.id
       return content unless content.get_content_rule
     end
     nil

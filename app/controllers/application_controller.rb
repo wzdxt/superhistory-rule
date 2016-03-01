@@ -8,4 +8,10 @@ class ApplicationController < ActionController::Base
   def set_object
     @content = Content.find(params[:content_id]) if params[:content_id]
   end
+
+  def nokogiri_parse string, url = nil, encoding = nil, options = nil
+    doc = Nokogiri.parse string, url, encoding, options
+    doc.css('script, style, head link').remove
+    doc
+  end
 end

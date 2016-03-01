@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160228160622) do
+ActiveRecord::Schema.define(version: 20160301142108) do
 
   create_table "host_rules", force: :cascade do |t|
     t.string   "host"
@@ -32,6 +32,11 @@ ActiveRecord::Schema.define(version: 20160228160622) do
     t.integer  "ord",               limit: 1
     t.datetime "created_at",                                  null: false
     t.datetime "updated_at",                                  null: false
+  end
+
+  create_table "skip_content_rules", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
