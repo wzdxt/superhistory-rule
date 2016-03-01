@@ -1,5 +1,7 @@
 class ContentsController < ApplicationController
   def source
-    render :html => @content.source.html_safe
+    doc = Nokogiri.parse @content.source
+    doc.css('script').remove
+    render :html => doc.to_s.html_safe
   end
 end

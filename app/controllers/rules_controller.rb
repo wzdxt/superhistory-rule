@@ -8,7 +8,7 @@ class RulesController < ApplicationController
     @uri = URI.parse @content.url
     @host_rule = HostRule.new :host => @uri.host, :port => nil, :include_sub => false, :excluded => false
     @path_rule = PathRule.new :path_pattern => @uri.path, :excluded => false,
-                              :title_css_path => 'html head title', :content_css_paths => '[]'
+                              :title_css_path => 'head title', :content_css_paths => '[]'
     @existed_host_rules = HostRule.matched_rules @uri.host, @uri.port
   end
 

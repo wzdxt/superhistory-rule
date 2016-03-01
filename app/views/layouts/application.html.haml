@@ -33,7 +33,7 @@
       %hr
       - if content_for?(:header)
         = yield(:header)
-    .container
+    .my-container(style='padding-left:16px')
       = yield
     - if content_for?(:action_bar)
       .action-bar
