@@ -1,10 +1,12 @@
 class RulesController < ApplicationController
   def new
-    @content = Content.first_no_rule
-    if @content.nil?
-      return redirect_to host_rules_path
+    unless @content
+      @content = Content.first_no_rule
+      if @content.nil?
+        return redirect_to host_rules_path
+      end
+      @content.reload
     end
-    @content.reload
     @uri = URI.parse @content.url
     @host_rule = HostRule.new :host => @uri.host, :port => nil, :include_sub => false, :excluded => false
     @path_rule = PathRule.new :path_pattern => @uri.path, :excluded => false,
@@ -36,6 +38,7 @@ class RulesController < ApplicationController
 
   def path_rule_params
     params[:path_rule][:path_pattern] = '/^/' + params[:path_rule][:path_pattern_items].join('/') + '$/'
+    params[:path_rule][:content_css_paths] = params[:path_rule][:content_css_path_items].to_json
     params.require(:path_rule).permit(:path_pattern, :excluded, :title_css_path, :content_css_paths, :ord)
   end
 end

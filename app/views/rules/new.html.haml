@@ -31,7 +31,7 @@
       %span port:
       = host_rule_form.number_field :port, :max => 65535, :min => 1, :class => 'port'
       = host_rule_form.check_box :include_sub
-      = host_rule_form.label :include_sub
+      = host_rule_form.label :include_sub, :for => 'host_rule_include_sub', :value => 'include sub domain'
       = host_rule_form.check_box :excluded
       = host_rule_form.label :excluded
       %span @id:
@@ -44,8 +44,10 @@
           - @uri.path.scan(/(?<=\/)[^\/]*/).each do |s|
             %span /
             - if s.present?
-              = path_rule_form.text_field :path_pattern_items, :name => 'path_rule[path_pattern_items][]', :value => s, :readonly => true, :size => 20, :class => 'path-pattern-item'
-              %a.btn.path-all-btn(href='javascript:void(0)') 全部
+              %span
+                = path_rule_form.text_field :path_pattern_items, :name => 'path_rule[path_pattern_items][]', :value => s, :readonly => true, :size => 20, :class => 'path-pattern-item'
+                %a.btn.path-all-btn(href='javascript:void(0)') 全部
+                %a.btn.path-digit-btn(href='javascript:void(0)') 数字
             - else
               = path_rule_form.text_field :path_pattern_items, :name => 'path_rule[path_pattern_items][]', :value => '', :class => 'hidden'
           %span (regex)
@@ -59,10 +61,6 @@
           %span content css paths:
           .content-css-paths-data
             %ul
-              - path_rule_form.object.content_css_paths_data.each do |path|
-                %li
-                  %span x
-                  = path
     - if @existed_host_rules.present?
       .existed-host-rule
         已有的规则:
@@ -83,7 +81,7 @@
               %td= r.excluded
     %div
       = host_rule_form.submit
-      %a(href='javascript:void(0)') 测试
+      %a.btn.test-btn(href='javascript:void(0)') 测试
 
 %div
   %table.css-path-setting
@@ -104,7 +102,7 @@
               %div
                 %a.btn.set-title-css-path-btn(href='javascript:void(0)') 标题
                 %a.btn.set-content-css-path-btn(href='javascript:void(0)') 正文
-            .dom-tree
+            .dom-tree(style='height:600px;overflow:scroll')
               #jstree_div
 
 .hidden

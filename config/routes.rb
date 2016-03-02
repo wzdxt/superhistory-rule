@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :rules
   resources :host_rules
   resources :path_rules
+  get 'contents/:content_id/rules/new' => 'rules#new'
   get 'contents/:content_id/source' => 'contents#source'
 
   root 'rules#new'
