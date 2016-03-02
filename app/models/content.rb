@@ -22,9 +22,9 @@ class Content < ActiveRecord::Base
     parent_host = get_parent_host host
     (HostRule.host(host).port(port).ord_order + HostRule.host(host).no_port.ord_order +
         (parent_host ? HostRule.host(parent_host).no_port.include_sub.ord_order : [])).each do |host_rule|
-      return [nil, false] if host_rule.excluded?
-      if content_rule = host_rule.get_content_rule_by_path(path)
-        return [content_rule, true]
+      return [host_rule, false] if host_rule.excluded?
+      if ret = host_rule.get_content_rule_by_path(path)
+        return ret
       end
     end
     nil

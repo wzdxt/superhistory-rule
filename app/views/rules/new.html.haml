@@ -30,9 +30,9 @@
       = host_rule_form.text_field :host, :class => 'host'
       %span port:
       = host_rule_form.number_field :port, :max => 65535, :min => 1, :class => 'port'
-      = host_rule_form.check_box :include_sub
+      = host_rule_form.check_box :include_sub, {}, true, false
       = host_rule_form.label :include_sub, :for => 'host_rule_include_sub', :value => 'include sub domain'
-      = host_rule_form.check_box :excluded
+      = host_rule_form.check_box :excluded, {}, true, false
       = host_rule_form.label :excluded
       %span @id:
       = host_rule_form.text_field :id, :size => 3, :readonly => true
@@ -51,7 +51,7 @@
             - else
               = path_rule_form.text_field :path_pattern_items, :name => 'path_rule[path_pattern_items][]', :value => '', :class => 'hidden'
           %span (regex)
-          = path_rule_form.check_box :excluded
+          = path_rule_form.check_box :excluded, {}, true, false
           = path_rule_form.label :excluded
         .title-css-path
           %span title css path:
@@ -74,13 +74,13 @@
           - @existed_host_rules.each do |r|
             %tr
               %td
-                %a(href='javascript:void(0)')= r.id
+                %a.btn.existed-host-rule-id(href='javascript:void(0)')= r.id
               %td= r.host
               %td= r.port || '-'
               %td= r.include_sub
               %td= r.excluded
     %div
-      = host_rule_form.submit
+      = host_rule_form.submit if @path_rule.new_record?
       %a.btn.test-btn(href='javascript:void(0)') 测试
 
 %div
@@ -108,7 +108,9 @@
 .hidden
   - source = Nokogiri.parse @content.source
   - source.css('script').remove
-  = hidden_field_tag :source, source.to_s
+  = hidden_field_tag :_data_source, source.to_s
+  = hidden_field_tag :_data_content_css_paths_json, @path_rule.content_css_paths
+  = hidden_field_tag :_data_title_css_path, @path_rule.title_css_path
 
 
 

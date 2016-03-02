@@ -7,10 +7,10 @@ $ ->
   'use strict'
 
   source_dom = document.createElement('html')
-  source_dom.innerHTML = $('#source').val()
+  source_dom.innerHTML = $('#_data_source').val()
 
-  content_css_paths = []
-  title_css_path = 'head title'
+  content_css_paths = JSON.parse $('#_data_content_css_paths_json').val()
+  title_css_path = $('#_data_title_css_path').val()
 
   Node = (tag = '', parent = null)->
     @tag = tag
@@ -49,12 +49,15 @@ $ ->
     $('<style>').appendTo($doc.find('head')).attr('type', 'text/css')
     .text '''
     @-webkit-keyframes twinkling{
+      0%, 100%{
+        background-color: #cccccc;
+      }
       50%{
-        background-color: gray;
+        background-color: #eeeeee;
       }
     }
     .test-css-path {
-      -webkit-animation: twinkling 2000ms infinite linear;
+      -webkit-animation: twinkling 800ms infinite linear;
     }
     '''
     $doc.find('body').on 'click', (e) ->
@@ -77,6 +80,9 @@ $ ->
   $('.form .url a.port').on 'click', (e) ->
     $('#host_rule_port').val e.target.text
   # host ref id
+  $('a.btn.existed-host-rule-id').on 'click', (e) ->
+    $('#host_rule_id').val $(e.target).text()
+  # erase host ref id
   $('a.btn.remove-btn.remove-host-ref-id').on 'click', ->
     $('#host_rule_id').val ''
   # path all
@@ -111,8 +117,9 @@ $ ->
     $('div.input-path-preview').empty().append(
       $('<h1>').text $(title_css_path, source_dom).text()
     ).append(
-      $(content_css_paths.join(','), source_dom)
+      c = $(content_css_paths.join(','), source_dom).clone()
     )
+    c.wrap('<p>')
   # remove content path
   $('.content-css-paths-data ul').delegate 'li a.btn-remove', 'click', (e) ->
     content_css_paths.remove $(e.target).siblings('input').val()
@@ -142,7 +149,7 @@ $ ->
         $('<li>').append(
           $('<a>').attr('href', 'javascript:void(0)').addClass('btn btn-remove').text('x')
         ).append(
-          $('<input>').attr('type', 'text').attr('name', 'path_rule[content_css_path_items][]').val(path).css('width', '500px')
+          $('<input>').attr('type', 'text').attr('name', 'path_rule[content_css_path_items][]').attr('readonly', true).css('width', '500px').val(path)
         )
       )
   uniq_css_path = (elem, tagName) ->
@@ -150,6 +157,8 @@ $ ->
     idx = $(elem).parent().children().index(elem) + 1
     "#{tagName}:nth-child(#{idx})"
 
+  # init call
+  render_content_css_paths_input()
 
 
 

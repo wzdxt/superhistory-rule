@@ -8,8 +8,7 @@ class HostRule < ActiveRecord::Base
 
   def get_content_rule_by_path(path)
     self.path_rules.ord_order.each do |path_rule|
-      return [nil, false] if path_rule.excluded?
-      return [path_rule, true] if path_rule.path_pattern =~ Regexp.new(path)
+      return [path_rule, !path_rule.excluded?] if path=~ Regexp.new(path_rule.path_pattern)
     end
     nil
   end

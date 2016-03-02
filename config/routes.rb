@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :skip_content_rules
   devise_for :admin
+  resources :contents
+  resources :skip_content_rules
   resources :rules
   resources :host_rules
   resources :path_rules

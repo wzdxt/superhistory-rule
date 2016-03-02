@@ -1,0 +1,64 @@
+%h1 Listing contents
+
+%table
+  %thead
+    %tr
+      -# o
+      %th(rowspan="2" )
+      -# content
+      %th(colspan="2" ) CONTENT
+      -# host rule
+      %th(colspan="5" ) HOST RULE
+      -# path rule
+      %th(colspan="5" ) PATH/TITLE/CONTENT RULE
+    %tr
+      -# o
+      -# content
+      %th Id
+      %th Url
+      -# host rule
+      %th Id
+      %th Host
+      %th Sub?
+      %th Port
+      %th Excluded
+      %th Order
+      -# path rule
+      %th Id
+      %th Path pattern
+      %th Excluded
+      %th Title
+      %th Content
+      %th Order
+
+  %tbody
+    - @contents.each do |content|
+      - rule, included = content.get_content_rule
+      - if rule and rule.is_a? PathRule
+        - host_rule = rule.host_rule
+        - path_rule = rule
+      - elsif rule and rule.is_a? HostRule
+        - host_rule = rule
+      %tr
+        -# o
+        %td= link_to 'o', "contents/#{content.id}/rules/new",:target => '_blank'
+        -# content
+        %td= content.id
+        %td= content.url
+        -# host rule
+        %td= link_to host_rule.id, host_rule, :target => '_blank' if host_rule
+        %td= host_rule.host if host_rule
+        %td= host_rule.include_sub? if host_rule
+        %td= host_rule.port if host_rule
+        %td= host_rule.excluded? if host_rule
+        %td= host_rule.ord if host_rule
+        -# path rule
+        %td= link_to path_rule.id, path_rule, :target => '_blank' if path_rule
+        %td= path_rule.path_pattern if path_rule
+        %td= path_rule.excluded? if path_rule
+        %td= path_rule.title_css_path if path_rule
+        %td= path_rule.content_css_paths if path_rule
+        %td= path_rule.ord if path_rule
+
+%br
+

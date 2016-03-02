@@ -53,6 +53,6 @@ class PathRulesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def path_rule_params
-      params.require(:path_rule).permit(:host_url_id, :path_pattern, :excluded, :title_css_path, :content_css_paths, :ord)
+      params.require(:path_rule).permit(:host_rule_id, :path_pattern, :excluded, :title_css_path, :content_css_paths, :ord)
     end
 end

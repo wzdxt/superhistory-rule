@@ -1,4 +1,5 @@
 class PathRule < ActiveRecord::Base
+  belongs_to :host_rule
   scope :ord_order, -> { order(:ord) }
 
   def content_css_paths_data
