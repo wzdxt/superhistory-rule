@@ -1,0 +1,20 @@
+// Place all the styles related to the contents controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+table.contents-rule
+  border-spacing: 0px
+  border-collapse: separate
+  > thead > tr > th
+    border-bottom: 1px solid
+    border-right: 1px solid
+  > tbody > tr
+    > td
+      border-bottom: 1px solid
+      border-right: 1px solid
+    > td:nth-child(3) > div
+      width: 300px
+      word-wrap: break-word
+    > td:nth-last-child(2) > div
+      width: 500px
+

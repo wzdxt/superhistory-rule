@@ -1,6 +1,8 @@
 %h1 Listing contents
 
-%table
+= paginate @contents
+
+%table.contents-rule
   %thead
     %tr
       -# o
@@ -8,9 +10,9 @@
       -# content
       %th(colspan="2" ) CONTENT
       -# host rule
-      %th(colspan="5" ) HOST RULE
+      %th(colspan="6" ) HOST RULE
       -# path rule
-      %th(colspan="5" ) PATH/TITLE/CONTENT RULE
+      %th(colspan="6" ) PATH/TITLE/CONTENT RULE
     %tr
       -# o
       -# content
@@ -44,7 +46,8 @@
         %td= link_to 'o', "contents/#{content.id}/rules/new",:target => '_blank'
         -# content
         %td= content.id
-        %td= content.url
+        %td
+          %div= content.url
         -# host rule
         %td= link_to host_rule.id, host_rule, :target => '_blank' if host_rule
         %td= host_rule.host if host_rule
@@ -57,8 +60,9 @@
         %td= path_rule.path_pattern if path_rule
         %td= path_rule.excluded? if path_rule
         %td= path_rule.title_css_path if path_rule
-        %td= path_rule.content_css_paths if path_rule
+        %td
+          %div= JSON.pretty_generate(JSON.parse(path_rule.content_css_paths || '')) if path_rule
         %td= path_rule.ord if path_rule
 
-%br
+= paginate @contents
 

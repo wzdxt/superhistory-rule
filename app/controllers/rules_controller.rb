@@ -49,7 +49,7 @@ class RulesController < ApplicationController
   def path_rule_params
     params[:path_rule][:excluded] ||= false
     params[:path_rule][:path_pattern] = '^/' + params[:path_rule][:path_pattern_items].join('/') + '$'
-    params[:path_rule][:content_css_paths] = params[:path_rule][:content_css_path_items].to_json
+    params[:path_rule][:content_css_paths] = (params[:path_rule][:content_css_path_items] || []).to_json
     params.require(:path_rule).permit(:path_pattern, :excluded, :title_css_path, :content_css_paths, :ord)
   end
 end

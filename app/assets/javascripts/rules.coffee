@@ -106,6 +106,12 @@ $ ->
     content_css_paths = content_css_paths.filter (path, idx) ->
       idx == content_css_paths.indexOf path
     render_content_css_paths_input()
+  # submit host excluded
+  $('form a.create-host-excluded-rule').on 'click', ->
+    $('#host_rule_excluded').attr('checked', true).parents('form').submit()
+  # submit path excluded
+  $('form a.create-path-excluded-rule').on 'click', ->
+    $('#path_rule_excluded').attr('checked', true).parents('form').submit()
   # test input
   $('.css-path-input').on 'change input', (e) ->
     selector = $(e.target).val()

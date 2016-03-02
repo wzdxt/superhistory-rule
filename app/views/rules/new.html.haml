@@ -79,8 +79,10 @@
               %td= r.port || '-'
               %td= r.include_sub
               %td= r.excluded
-    %div
-      = host_rule_form.submit if @path_rule.new_record?
+    .submit-buttons
+      %a.btn.create-host-excluded-rule(href='javascript:void(0)') host excluded
+      %a.btn.create-path-excluded-rule(href='javascript:void(0)') path excluded
+      = host_rule_form.submit :class => 'btn' if @path_rule.new_record?
       %a.btn.test-btn(href='javascript:void(0)') 测试
 
 %div
