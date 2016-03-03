@@ -9,4 +9,8 @@ class PathRule < ActiveRecord::Base
   def content_css_paths_data=(data)
     self.content_css_paths = data.to_json
   end
+
+  def self.reset_table
+    self.delete_all
+  end
 end

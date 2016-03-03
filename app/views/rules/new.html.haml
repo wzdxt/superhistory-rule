@@ -11,10 +11,11 @@
       %a.host(href='javascript:void(0)')= @uri.host
       %span> :
       %a.port(href='javascript:void(0)')= @uri.port
-      - @uri.path.scan(/(?<=\/)[^\/]*/).each do |s|
+      - @path.scan(/(?<=\/)[^\/]*/).each do |s|
         %span> /
         - if s.present?
           %a.btn.path-btn(href='javascript:void(0)')= s
+      %span= @ext
       - if @uri.query
         %span> ?
         = @uri.query
@@ -41,7 +42,7 @@
       = fields_for @path_rule do |path_rule_form|
         .url-path
           %span path:
-          - @uri.path.scan(/(?<=\/)[^\/]*/).each do |s|
+          - @path.scan(/(?<=\/)[^\/]*/).each do |s|
             %span /
             - if s.present?
               %span
@@ -50,7 +51,7 @@
                 %a.btn.path-digit-btn(href='javascript:void(0)') 数字
             - else
               = path_rule_form.text_field :path_pattern_items, :name => 'path_rule[path_pattern_items][]', :value => '', :class => 'hidden'
-          %span (regex)
+          = path_rule_form.text_field :path_pattern_ext, :name => 'path_rule[path_pattern_ext]', :value => @ext, :readonly => true, :size => @ext.length
           = path_rule_form.check_box :excluded, {}, true, false
           = path_rule_form.label :excluded
         .title-css-path

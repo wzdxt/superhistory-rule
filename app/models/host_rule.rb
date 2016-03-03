@@ -19,6 +19,10 @@ class HostRule < ActiveRecord::Base
         (parent_host ? self.host(parent_host).no_port.include_sub.ord_order : []))
   end
 
+  def self.reset_table
+    self.delete_all
+  end
+
   private
 
   def self.get_parent_host(host)

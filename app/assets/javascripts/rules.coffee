@@ -165,6 +165,9 @@ $ ->
 
   # init call
   render_content_css_paths_input()
+  $('.form .path .url-path input.path-pattern-item').each (idx, input) ->
+    unless isNaN $(input).val()
+      $(input).siblings('.path-digit-btn').click()
 
 
 
