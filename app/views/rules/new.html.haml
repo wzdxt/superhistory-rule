@@ -51,7 +51,7 @@
                 %a.btn.path-digit-btn(href='javascript:void(0)') 数字
             - else
               = path_rule_form.text_field :path_pattern_items, :name => 'path_rule[path_pattern_items][]', :value => '', :class => 'hidden'
-          = path_rule_form.text_field :path_pattern_ext, :name => 'path_rule[path_pattern_ext]', :value => @ext, :readonly => true, :size => @ext.length
+          = path_rule_form.text_field :path_pattern_ext, :name => 'path_rule[path_pattern_ext]', :value => @ext, :readonly => true, :size => @ext.length if @ext
           = path_rule_form.check_box :excluded, {}, true, false
           = path_rule_form.label :excluded
         .title-css-path
