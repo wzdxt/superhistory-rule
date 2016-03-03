@@ -1,7 +1,6 @@
 class ContentsController < ApplicationController
   def source
-    doc = Nokogiri.parse @content.source
-    doc.css('script iframe frameset').remove    # must same with rules/new
+    doc = nokogiri_parse @content.source
     render :html => doc.to_s.html_safe
   end
 

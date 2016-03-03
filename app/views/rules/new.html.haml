@@ -110,8 +110,7 @@
               #jstree_div
 
 .hidden
-  - source = Nokogiri.parse @content.source
-  - source.css('script iframe frameset').remove   # must same with ContentsController
+  - source = nokogiri_parse @content.source
   = hidden_field_tag :_data_source, source.to_s
   = hidden_field_tag :_data_content_css_paths_json, @path_rule.content_css_paths
   = hidden_field_tag :_data_title_css_path, @path_rule.title_css_path
