@@ -26,12 +26,12 @@ ActiveRecord::Schema.define(version: 20160301142108) do
   create_table "path_rules", force: :cascade do |t|
     t.integer  "host_rule_id"
     t.string   "path_pattern"
-    t.boolean  "excluded",                    default: false
-    t.text     "title_css_path"
-    t.text     "content_css_paths",           default: "[]"
+    t.boolean  "excluded",                        default: false
+    t.string   "title_css_path",    limit: 10000
+    t.string   "content_css_paths", limit: 10000, default: "[]"
     t.integer  "ord",               limit: 1
-    t.datetime "created_at",                                  null: false
-    t.datetime "updated_at",                                  null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
   end
 
   create_table "skip_content_rules", force: :cascade do |t|

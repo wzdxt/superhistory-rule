@@ -3,7 +3,8 @@
 %table
   %thead
     %tr
-      %th Host url
+      %th Id
+      %th Host rule
       %th Path pattern
       %th Excluded
       %th Title css path
@@ -16,6 +17,7 @@
   %tbody
     - @path_rules.each do |path_rule|
       %tr
+        %td= path_rule.id
         %td= path_rule.host_rule_id
         %td= path_rule.path_pattern
         %td= path_rule.excluded

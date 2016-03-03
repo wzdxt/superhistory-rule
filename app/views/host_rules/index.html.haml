@@ -3,6 +3,7 @@
 %table
   %thead
     %tr
+      %th Id
       %th Host
       %th Port
       %th Include sub
@@ -15,6 +16,7 @@
   %tbody
     - @host_rules.each do |host_rule|
       %tr
+        %td= host_rule.id
         %td= host_rule.host
         %td= host_rule.port
         %td= host_rule.include_sub
