@@ -126,6 +126,12 @@ $ ->
       c = $(content_css_paths.join(','), source_dom).clone()
     )
     c.wrap('<p>')
+  # preview area size
+  $('a.preview-size-btn').on 'click', ->
+    if $('div.input-path-preview').css('width') == '300px'
+      $('div.input-path-preview').css('width', '')
+    else
+      $('div.input-path-preview').css('width', '300px')
   # remove content path
   $('.content-css-paths-data ul').delegate 'li a.btn-remove', 'click', (e) ->
     content_css_paths.remove $(e.target).siblings('input').val()
