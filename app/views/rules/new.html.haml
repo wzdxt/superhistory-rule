@@ -88,6 +88,11 @@
       %a.btn.preview-size-btn(href='javascript:void(0)') 预览区大小
 
 %div
+  .css-path-setting
+    %div
+      %input.css-path-input(type='text' style='width:80%')
+      %a.btn.set-title-css-path-btn(href='javascript:void(0)') 标题
+      %a.btn.set-content-css-path-btn(href='javascript:void(0)') 正文
   %table.css-path-setting
     %tbody
       %tr
@@ -100,12 +105,6 @@
             = cache.to_s.html_safe
         %td(valign="top" )
           %div(style='width:300px;')
-            .css-path-setting
-              %div
-                %input.css-path-input(type='text' style='width:100%')
-              %div
-                %a.btn.set-title-css-path-btn(href='javascript:void(0)') 标题
-                %a.btn.set-content-css-path-btn(href='javascript:void(0)') 正文
             .dom-tree(style='height:600px;overflow:scroll')
               #jstree_div
 
