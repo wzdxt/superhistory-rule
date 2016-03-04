@@ -4,7 +4,7 @@ class HostRule < ActiveRecord::Base
   scope :no_port, -> { where(:port => nil) }
   scope :include_sub, -> { where(:include_sub => true) }
   scope :ord_order, -> { order(:ord) }
-  has_many :path_rules
+  has_many :path_rules, :dependent => :delete_all
 
   def get_content_rule_by_path(path)
     self.path_rules.ord_order.each do |path_rule|
