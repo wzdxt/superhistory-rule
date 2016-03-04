@@ -5,7 +5,7 @@ class Content < ActiveRecord::Base
 
   def get_content_rule
     host, port, path = fetch_url_info
-    get_rule_by_host_port_path(host, port, path)
+    HostRule.get_rule_by_host_port_path(host, port, path)
   end
 
   def self.first_no_rule
@@ -17,16 +17,6 @@ class Content < ActiveRecord::Base
   end
 
   private
-
-  def get_rule_by_host_port_path(host, port, path)
-    HostRule.matched_rules(host, port).each do |host_rule|
-      return [host_rule, false] if host_rule.excluded?
-      if ret = host_rule.get_content_rule_by_path(path)
-        return ret
-      end
-    end
-    nil
-  end
 
   def fetch_url_info
     uri = URI.parse self.url

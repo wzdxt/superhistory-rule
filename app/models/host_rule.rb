@@ -20,6 +20,16 @@ class HostRule < ActiveRecord::Base
         (parent_host ? self.host(parent_host).no_port.include_sub.ord_order : []))
   end
 
+  def self.get_rule_by_host_port_path(host, port, path)
+    self.matched_rules(host, port).each do |host_rule|
+      return [host_rule, false] if host_rule.excluded?
+      if ret = host_rule.get_content_rule_by_path(path)
+        return ret
+      end
+    end
+    nil
+  end
+
   def self.reset_table
     self.delete_all
   end
