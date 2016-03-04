@@ -67,19 +67,35 @@
         已有的规则:
         %table
           %tr
+            %th(colspan="5") HOST RULE
+            %th(colspan="2") PATH RULE
+          %tr
             %th id
             %th host
             %th port
             %th include sub
             %th excluded
-          - @existed_host_rules.each do |r|
-            %tr
-              %td
-                %a.btn.existed-host-rule-id(href='javascript:void(0)')= r.id
-              %td= r.host
-              %td= r.port || '-'
-              %td= r.include_sub
-              %td= r.excluded
+            %th id
+            %th path pattern
+          - @existed_host_rules.each do |host_rule|
+            - host_rule.path_rules.each_with_index do |path_rule, idx|
+              %tr
+                - if idx == 0
+                  %td
+                    %a.btn.existed-host-rule-id(href='javascript:void(0)')= host_rule.id
+                  %td= host_rule.host
+                  %td= host_rule.port || '-'
+                  %td= host_rule.include_sub
+                  %td= host_rule.excluded
+                - else
+                  %td
+                  %td
+                  %td
+                  %td
+                  %td
+                %td
+                  = link_to path_rule.id, path_rule, :target => '_blank'
+                %td= path_rule.path_pattern
     .submit-buttons
       %a.btn.create-host-excluded-rule(href='javascript:void(0)') host excluded
       %a.btn.create-path-excluded-rule(href='javascript:void(0)') path excluded
