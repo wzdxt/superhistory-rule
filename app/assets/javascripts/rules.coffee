@@ -116,6 +116,7 @@ $ ->
   $('.css-path-input').on 'change input', (e) ->
     selector = $(e.target).val()
     $('.input-path-preview').text $(selector, source_dom).text()
+    $('.input-path-preview').prepend($('<div>').text('length: ' + $('.input-path-preview').text().length))
     $('#source_iframe').contents().find('.test-css-path').removeClass('test-css-path')
     $('#source_iframe').contents().find(selector).addClass('test-css-path')
   # all test
