@@ -142,7 +142,10 @@ $ ->
   $ ->
     node = build_dom_tree($(source_dom))
     $('#jstree_div').jstree({
-      core: {data: [node.jstree_json()]}
+      core: {
+        data: [node.jstree_json()]
+        ,themes: {variant:'small'}
+      }
       plugins: ["wholerow"]
     }).on 'changed.jstree', (e, data) ->
       j_id = data.selected
