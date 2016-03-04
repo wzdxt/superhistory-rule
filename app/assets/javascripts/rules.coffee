@@ -119,6 +119,9 @@ $ ->
     $('.input-path-preview').prepend($('<div>').text('length: ' + $('.input-path-preview').text().length))
     $('#source_iframe').contents().find('.test-css-path').removeClass('test-css-path')
     $('#source_iframe').contents().find(selector).addClass('test-css-path')
+  # test choosen
+  $('div.path').delegate '.title-css-path input, .content-css-paths .content-css-paths-data input', 'click', (e) ->
+    $('.css-path-input').val($(e.target).val()).trigger('change')
   # all test
   $('a.test-btn').on 'click', ->
     $('div.input-path-preview').empty().append(
@@ -165,7 +168,7 @@ $ ->
         $('<li>').append(
           $('<a>').attr('href', 'javascript:void(0)').addClass('btn btn-remove').text('x')
         ).append(
-          $('<input>').attr('type', 'text').attr('name', 'path_rule[content_css_path_items][]').attr('readonly', true).css('width', '500px').val(path)
+          $('<input>').attr('type', 'text').attr('name', 'path_rule[content_css_path_items][]').attr('readonly', true).css('width', '800px').val(path)
         )
       )
   uniq_css_path = (elem, tagName) ->
