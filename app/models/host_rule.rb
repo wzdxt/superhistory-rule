@@ -1,9 +1,10 @@
 class HostRule < ActiveRecord::Base
+  arel = self.arel_table
   scope :host, ->(host) { where(:host => host) }
   scope :port, ->(port) { where(:port => port) }
   scope :no_port, -> { where(:port => nil) }
   scope :include_sub, -> { where(:include_sub => true) }
-  scope :ord_order, -> { order(:ord) }
+  scope :ord_order, -> { order(arel[:ord].eq(nil)).order(arel[:ord]) }
   has_many :path_rules, :dependent => :delete_all
 
   def get_content_rule_by_path(path)

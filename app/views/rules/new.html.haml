@@ -97,9 +97,10 @@
                   = link_to path_rule.id, path_rule, :target => '_blank'
                 %td= path_rule.path_pattern
     .submit-buttons
-      %a.btn.create-host-excluded-rule(href='javascript:void(0)') host excluded
-      %a.btn.create-path-excluded-rule(href='javascript:void(0)') path excluded
-      = host_rule_form.submit :class => 'btn' if @path_rule.new_record?
+      - if @path_rule.new_record?
+        %a.btn.create-host-excluded-rule(href='javascript:void(0)') host excluded
+        %a.btn.create-path-excluded-rule(href='javascript:void(0)') path excluded
+        = host_rule_form.submit :class => 'btn'
       %a.btn.test-btn(href='javascript:void(0)') 测试
       %a.btn.preview-size-btn(href='javascript:void(0)') 预览区大小
 

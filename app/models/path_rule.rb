@@ -1,6 +1,7 @@
 class PathRule < ActiveRecord::Base
+  arel = self.arel_table
   belongs_to :host_rule
-  scope :ord_order, -> { order(:ord) }
+  scope :ord_order, -> { order(arel[:ord].eq(nil)).order(arel[:ord]) }
 
   def content_css_paths_data
     JSON.parse self.content_css_paths
