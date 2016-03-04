@@ -31,9 +31,9 @@
       = host_rule_form.text_field :host, :class => 'host'
       %span port:
       = host_rule_form.number_field :port, :max => 65535, :min => 1, :class => 'port'
-      = host_rule_form.check_box :include_sub, {}, true, false
+      = host_rule_form.check_box :include_sub, {}
       = host_rule_form.label :include_sub, :for => 'host_rule_include_sub', :value => 'include sub domain'
-      = host_rule_form.check_box :excluded, {}, true, false
+      = host_rule_form.check_box :excluded, {}
       = host_rule_form.label :excluded
       %span @id:
       = host_rule_form.text_field :id, :size => 3, :readonly => true
@@ -52,7 +52,7 @@
             - else
               = path_rule_form.text_field :path_pattern_items, :name => 'path_rule[path_pattern_items][]', :value => '', :class => 'hidden'
           = path_rule_form.text_field :path_pattern_ext, :name => 'path_rule[path_pattern_ext]', :value => @ext, :readonly => true, :size => @ext.length if @ext
-          = path_rule_form.check_box :excluded, {}, true, false
+          = path_rule_form.check_box :excluded, {}
           = path_rule_form.label :excluded
         .title-css-path
           %span title css path:

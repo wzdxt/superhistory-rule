@@ -24,14 +24,17 @@ class RulesController < ApplicationController
   end
 
   def create
-    if host_rule_params[:id]
-      host_rule = HostRule.find(host_rule_params[:id])
-    else
-      host_rule = HostRule.find_or_create_by! host_rule_params.except(:id)
-    end
-    unless host_rule.excluded?
-      path_rule = PathRule.new path_rule_params
-      path_rule.update! :host_rule_id => host_rule.id
+    HostRule.transaction do
+      if host_rule_params[:id].present?
+        host_rule = HostRule.find(host_rule_params[:id])
+      else
+        host_rule = HostRule.new host_rule_params.except(:id)
+        host_rule = HostRule.find_or_create_by! host_rule.attributes.except('id', 'ord', 'created_at', 'updated_at')
+      end
+      unless host_rule.excluded?
+        path_rule = PathRule.new path_rule_params
+        path_rule.update! :host_rule_id => host_rule.id
+      end
     end
     redirect_to new_rule_path
   end
@@ -39,16 +42,10 @@ class RulesController < ApplicationController
   private
 
   def host_rule_params
-    params[:host_rule][:include_sub] ||= false
-    params[:host_rule][:excluded] ||= false
-    params[:host_rule][:id] = nil unless params[:host_rule][:id].present?
-    params[:host_rule][:port] = nil unless params[:host_rule][:port].present?
-    params[:host_rule][:ord] = nil unless params[:host_rule][:ord].present?
     params.require(:host_rule).permit(:id, :host, :port, :include_sub, :excluded, :ord)
   end
 
   def path_rule_params
-    params[:path_rule][:excluded] ||= false
     params[:path_rule][:path_pattern] = params[:path_rule][:path_pattern_items].join('\\/')
     params[:path_rule][:path_pattern] += '\\' + params[:path_rule][:path_pattern_ext] if params[:path_rule][:path_pattern_ext].present?
     params[:path_rule][:path_pattern] = '^\\/' + params[:path_rule][:path_pattern] + '$'
