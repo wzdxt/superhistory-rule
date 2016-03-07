@@ -50,6 +50,8 @@ class RulesController < ApplicationController
     params[:path_rule][:path_pattern] += '\\' + params[:path_rule][:path_pattern_ext] if params[:path_rule][:path_pattern_ext].present?
     params[:path_rule][:path_pattern] = '^\\/' + params[:path_rule][:path_pattern] + '$'
     params[:path_rule][:content_css_paths] = (params[:path_rule][:content_css_path_items] || []).to_json
+    params[:path_rule][:title_css_path].downcase!
+    params[:path_rule][:content_css_paths].downcase!
     params.require(:path_rule).permit(:path_pattern, :excluded, :title_css_path, :content_css_paths, :ord)
   end
 

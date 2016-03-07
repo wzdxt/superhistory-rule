@@ -22,9 +22,4 @@ class Content < ActiveRecord::Base
     uri = URI.parse self.url
     [uri.host, uri.port, uri.path]
   end
-
-  def get_parent_host(host)
-    s = host.split('.')
-    s.size < 3 ? nil : s[1..-1].join('.')
-  end
 end

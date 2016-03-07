@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :admin
+  resources :pages
   resources :contents
   resources :skip_content_rules
   resources :rules

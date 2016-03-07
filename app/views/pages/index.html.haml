@@ -1,0 +1,70 @@
+%h1 Listing pages
+
+= paginate @pages
+
+%table.pages-rule
+  %thead
+    %tr
+      -# o
+      %th(rowspan="2" )
+      -# page
+      %th(colspan="3" ) PAGE
+      -# host rule
+      %th(colspan="6" ) HOST RULE
+      -# path rule
+      %th(colspan="6" ) PATH/TITLE/CONTENT RULE
+    %tr
+      -# o
+      -# page
+      %th Id
+      %th Url
+      %th Status
+      -# host rule
+      %th Id
+      %th Host
+      %th Sub?
+      %th Port
+      %th Excluded
+      %th Order
+      -# path rule
+      %th Id
+      %th Path pattern
+      %th Excluded
+      %th Title
+      %th Content
+      %th Order
+
+  %tbody
+    - @pages.each do |page|
+      - rule, included = page.get_rule
+      - if rule and rule.is_a? PathRule
+        - host_rule = rule.host_rule
+        - path_rule = rule
+      - elsif rule and rule.is_a? HostRule
+        - host_rule = rule
+      %tr
+        -# o
+        %td= link_to 'o', "contents/#{page.id}/rules/new",:target => '_blank'
+        -# page
+        %td= page.id
+        %td
+          %div= page.url
+        %td= page.status
+        -# host rule
+        %td= link_to host_rule.id, host_rule, :target => '_blank' if host_rule
+        %td= host_rule.host if host_rule
+        %td= host_rule.include_sub? if host_rule
+        %td= host_rule.port if host_rule
+        %td= host_rule.excluded? if host_rule
+        %td= host_rule.ord if host_rule
+        -# path rule
+        %td= link_to path_rule.id, path_rule, :target => '_blank' if path_rule
+        %td= path_rule.path_pattern if path_rule
+        %td= path_rule.excluded? if path_rule
+        %td= path_rule.title_css_path if path_rule
+        %td
+          %div= JSON.pretty_generate(JSON.parse(path_rule.content_css_paths || '')) if path_rule
+        %td= path_rule.ord if path_rule
+
+= paginate @pages
+

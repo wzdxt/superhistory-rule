@@ -18,6 +18,9 @@ admin:
 content:
   <<: *default
   database: ../superhistory-content/db/sqlite/superhistory_development
+page:
+  <<: *default
+  database: ../superhistory-page/db/sqlite/superhistory_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
